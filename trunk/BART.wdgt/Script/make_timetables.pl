@@ -18,22 +18,22 @@ use strict;
 my $starting_hour = 4;      # 4:00 am is the origin.
 
 my %line_names = (
-    yellow_dalycity  => 'ROUTE1',
-    yellow_pittsburg => 'ROUTE2',
-    orange_richmond  => 'ROUTE3',
-    orange_fremont   => 'ROUTE4',
-    green_dalycity   => 'ROUTE5',
-    green_fremont    => 'ROUTE6',
-    red_dalycity     => 'ROUTE7',
-    red_richmond     => 'ROUTE8',
-    blue_millbrae    => 'ROUTE11',
-    blue_dublin      => 'ROUTE12',
+    yellow_millbrae  => '1',
+    yellow_pittsburg => '2',
+    orange_richmond  => '3',
+    orange_fremont   => '4',
+    green_dalycity   => '5',
+    green_fremont    => '6',
+    red_millbrae     => '7',
+    red_richmond     => '8',
+    blue_dalycity    => '11',
+    blue_dublin      => '12',
 );
 
 my %day_names = (
-    weekday  => 'WD',
-    saturday => 'SA',
-    sunday   => 'SU',
+    weekday  => '12/18/2009',
+    saturday => '12/19/2009',
+    sunday   => '12/20/2009',
 );
 
 my %station_names = (
@@ -121,13 +121,14 @@ exit();
 sub makeBartUrl {
     my ($line_name, $day_name) = @_;
     my ($srcdst, $daycode) = ($line_names{$line_name}, $day_names{$day_name});
-    return "http://bart.gov/stations/schedules/lineSchedules_${srcdst}_${daycode}.asp"
+    return "http://www.bart.gov/schedules/bylineresults.aspx?route=${srcdst}&date=${daycode}"
 }
 
 sub getFromUrl {
     my ($url) = @_;
     # I'd rather use LWP, but I can't get CPAN to work.
-    return `wget --quiet -O - $url`;
+    # return `wget --quiet -O - $url`;
+    return `curl --silent '$url'`;
 }
 
 sub translateHtml {
@@ -152,7 +153,7 @@ sub parseHtml {
     
     my $checkForBikeBoundary = sub {
         my ($no_bikes, $station) = @_;
-        if ($no_bikes) {
+        if ($no_bikes =~ /shaded/) {
             $first_no_bikes_station ||= $station;
             $last_no_bikes_station = $station;
         }
@@ -171,8 +172,10 @@ sub parseHtml {
     };
     
     my $must_be_pm = 0;
-    while ($html =~ m{<td class="tdtime" header="(\w+)"( bgcolor="\#\w+")?>\s*(.*?)\s*</td>}gs) {
-        my ($station, $no_bikes, $time) = ($1, $2, $3);
+    # Jump ahead to avoid matching some earlier tables.
+    $html =~ m{<p class="bike-hours">}g;
+    while ($html =~ m{<td class="(.*?)" headers="id(\w+)" style=".*?">\s*(.*?)\s*?</td>}gs) {
+        my ($no_bikes, $station, $time) = ($1, $2, $3);
         my ($hour, $min) = (-1, -1);
         if ($time =~ /(\d+):(\d+)/) {
             ($hour, $min) = ($1, $2);
@@ -223,9 +226,9 @@ sub translateBikeBoundaries {
     for my $boundary (@$bike_boundaries) {
         next unless $boundary;
         my ($start_station, $end_station) = @$boundary;
-        $out .= "$js_array_name.no_bikes[$train_index] = [ " . 
-                "$js_array_name\['$station_names{$start_station}'][$train_index], " .
-                "$js_array_name\['$station_names{$end_station}'][$train_index] ];\n";
+            $out .= "$js_array_name.no_bikes[$train_index] = [ " . 
+                    "$js_array_name\['$station_names{$start_station}'][$train_index], " .
+                    "$js_array_name\['$station_names{$end_station}'][$train_index] ];\n";
     }
     continue { ++$train_index }
 
@@ -252,6 +255,8 @@ sub translateSingleStation {
     my $out = "$js_array_name\['$station_name'] = [\n   ";
     
     my $last_valid_entry = -1;
+    my $was_last_valid = -1;
+    
     my $count = 0;
     for my $info (@$timetable) {
         my ($hour, $min, $must_be_pm) = @$info;
@@ -259,13 +264,15 @@ sub translateSingleStation {
         my $minutes_since_morn;
         if ($hour < 0) {    # Invalid entry.
             $minutes_since_morn = $last_valid_entry + 0.5;
+            $was_last_valid = -1; ## Kludge to make Yellow Millbrae times correct.
         }
         else {              # Valid entry.
-            if ($must_be_pm and $last_valid_entry == -1) { $ampm_hour_offset = 12; }
+            if ($must_be_pm and ($last_valid_entry == -1 or $was_last_valid == -1)) { $ampm_hour_offset = 12; }
             elsif ($hour < $hour_of_last_stop) { $ampm_hour_offset = $ampm_hour_offset + 12 }
             $hour_of_last_stop = $hour;
             $minutes_since_morn = $min + 60 * ($hour + $ampm_hour_offset - $starting_hour);
             $last_valid_entry = $minutes_since_morn;
+            $was_last_valid = 0;
         }
         $out .= "$minutes_since_morn, ";
         $out .= "\n   " unless ++$count % 16;

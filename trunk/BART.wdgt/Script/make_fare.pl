@@ -4,7 +4,7 @@
 #  This software is licensed under the terms of the open source MIT license.
 #---------------------------------------------------------------------------------
 #
-#  perl make_timetables.pl -fare > Fare.js
+#  perl make_fare.pl > Fare.js
 #
 #  Downloads the line schedules from bart.gov and generates a JavaScript
 #  fare table on stdout.  This becomes the Fare.js file.
@@ -18,58 +18,58 @@ use strict;
 
 my %station_names = (
 
-    'MLBR' => "Millbrae",
-    'SFIA' => "SFO",
-    'SBRN' => "San Bruno",
-    'SSAN' => "South SF",
-    'COLMA' => "Colma",
+    MLBR => "Millbrae",
+    SFIA => "SFO",
+    SBRN => "San Bruno",
+    SSAN => "South SF",
+    COLM => "Colma",
     
-    'DALY' => "Daly City",
-    'BALPK' => "Balboa Park",
+    DALY => "Daly City",
+    BALB => "Balboa Park",
     
-    'WOAK' => "West Oakland",
-    'EMBAR' => "Embarcadero", 
-    'MONTG' => "Montgomery", 
-    'POWEL' => "Powell", 
-    'CIVIC' => "Civic Center",
-    '16ST' => "16th St",
-    '24ST' => "24th St",
+    WOAK => "West Oakland",
+    EMBR => "Embarcadero", 
+    MONT => "Montgomery", 
+    POWL => "Powell", 
+    CIVC => "Civic Center",
+    '16TH' => "16th St",
+    '24TH' => "24th St",
 
-    'BAYPT' => "Pittsburg", 
-    'NCNC' => "North Concord",
-    'CONCD' => "Concord", 
-    'PHILL' => "Pleasant Hill",
-    'WCRK' => "Walnut Creek",
-    'LAFAY' => "Lafayette", 
-    'ORNDA' => "Orinda", 
-    'ROCKR' => "Rockridge", 
-    'MACAR' => "MacArthur",
-    '12ST' => "12th St",
-    '19ST' => "19th St",
+    PITT => "Pittsburg", 
+    NCON => "North Concord",
+    CONC => "Concord", 
+    PHIL => "Pleasant Hill",
+    WCRK => "Walnut Creek",
+    LAFY => "Lafayette", 
+    ORIN => "Orinda", 
+    ROCK => "Rockridge", 
+    MCAR => "MacArthur",
+    '12TH' => "12th St",
+    '19TH' => "19th St",
     
-    'HAY' => "Hayward", 
-    'SHAY' => "South Hayward",
-    'UCITY' => "Union City",
-    'FREMT' => "Fremont",
+    HAYW => "Hayward", 
+    SHAY => "South Hayward",
+    UCTY => "Union City",
+    FRMT => "Fremont",
 
-    'LAKEM' => "Lake Merritt", 
-    'FRTVL' => "Fruitvale", 
-    'COLIS' => "Coliseum",
-    'SLEAN' => "San Leandro",
-    'BFAIR' => "Bay Fair",
+    LAKE => "Lake Merritt", 
+    FTVL => "Fruitvale", 
+    COLS => "Coliseum",
+    SANL => "San Leandro",
+    BAYF => "Bay Fair",
     
-    'RICH' => "Richmond", 
-    'DELN' => "Del Norte", 
-    'PLAZA' => "Plaza", 
-    'NBRK' => "North Berkeley",
-    'BRK' => "Berkeley", 
-    'ASHBY' => "Ashby",
+    RICH => "Richmond", 
+    DELN => "Del Norte", 
+    PLZA => "Plaza", 
+    NBRK => "North Berkeley",
+    DBRK => "Berkeley", 
+    ASHB => "Ashby",
     
-    'GLNPK' => "Glen Park",
-    'CVLY' => "Castro Valley",
-    'DUBLIN' => "Dublin",
-
+    GLEN => "Glen Park",
+    CAST => "Castro Valley",
+    DUBL => "Dublin",
 );
+
 
 
 #-----------------------------------------------------------------
@@ -95,23 +95,24 @@ exit();
 
 sub makeUrl {
     my ($from_station, $to_station) = @_;
-    return "http://bart.gov/tickets/calculator/fareCalculator.asp?trip_mode=oneway&origin=$from_station" .
-           "&destination=$to_station&Submit.x=1&Submit.y=1&Submit=submit&dhtml=0";
+
+    return "http://bart.gov/scripts/aspx/fare_calc_ajax.aspx?orig=$from_station" .
+           "&dest=$to_station&trip=one-way";
 }
 
 sub getFromUrl {
     my ($url) = @_;
     # I'd rather use LWP, but I can't get CPAN to work.
-    return `wget --quiet -O - '$url'`;
+
+    # If you'd rather use wget:
+    # return `wget --quiet -O - '$url'`;
+    return `curl --silent '$url'`;
 }
 
 sub getFareFromHtml {
     my ($html) = @_;
-    my ($dollars,$cents) = ($html =~ /\.<b class="normal">\s*\$(\d+)\.(\d+)/);
-    unless (defined $dollars) {
-        ($dollars,$cents) = ($html =~ /\$(\d+)\.(\d+) Excursion Fare/i);
-        unless (defined $dollars) { die "could not understand this:\n\n$html\n"; }
-    }
+    my ($dollars,$cents) = ($html =~ /<strong>\$(\d+)\.(\d+)/);
+    unless (defined $dollars) { die "could not understand this:\n\n$html\n"; }
     return 100 * $dollars + $cents;
 }
 
