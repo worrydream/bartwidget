@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllowNetworkAccess</key>
+	<true/>
+	<key>AllowSystem</key>
+	<true/>
+	<key>CFBundleDisplayName</key>
+	<string>BART</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.worrydream.bartwidget</string>
+	<key>CFBundleName</key>
+	<string>BART</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.03</string>
+	<key>CFBundleVersion</key>
+	<string>1.03</string>
+	<key>CloseBoxInsetX</key>
+	<integer>8</integer>
+	<key>CloseBoxInsetY</key>
+	<integer>8</integer>
+	<key>Width</key>
+	<integer>350</integer>
+	<key>Height</key>
+	<integer>239</integer>
+	<key>MainHTML</key>
+	<string>BART.html</string>
+</dict>
+</plist>

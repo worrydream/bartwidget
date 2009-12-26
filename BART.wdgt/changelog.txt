@@ -1,0 +1,84 @@
+
+...........................................................................
+ 
+                      T h e   B A R T   W i d g e t 
+
+...........................................................................
+                                                                 Change Log
+This document lists major changes.  All sorts of minor details
+change between releases, but you don't really care about them.
+
+
+v1.02:  January 2, 2008
+--------------------
+ - Schedules, maps, and fares updated for 2008.
+
+
+v1.01:  June 2, 2007
+--------------------
+ - Leopard compatibility.
+
+
+v1.0:  November 2, 2005  except it somehow ended up February 22, 2007 to my eternal shame etc.
+-----------------------
+ - Click the speaker button for voice announcements on the 
+   currently-displayed route.
+
+ - The trip area automatically scales horizontally, so long trips
+   don't run off the end of the widget.
+   
+ - The time/date bar stays in sync when you drag or scroll the
+   trip area.
+   
+ - Map baubles shrink when you drag them, so it's easier to see
+   the map.
+
+ - Fares and holiday schedules are updated.  Profuse thanks to
+   Michael Andersen, Annie Madej, and Jeff Baker for updating
+   the fare tables for me.
+
+
+v0.94:  September 13, 2005
+--------------------------
+ - The widget has been updated to reflect BART's new schedule.
+
+ - Let voice announcements guide you to and from work every day.
+   Click the "speaker" button next to a bookmark, and then click
+   the words in red to change them.
+
+
+v0.93:  August 17, 2005
+-----------------------
+ - Bookmark the current route by clicking the "heart" button.
+
+ - Trips that disallow bikes are displayed with a "no bikes" icon.
+
+
+v0.92:  July 26, 2005
+---------------------
+ - At the request of BART's legal department, the BART logo and the
+   official BART map have been removed.
+
+ - New maps designed by Newmediasoup, Walter Jew, and Omid Tavallai.
+   When the map area is open, click the (x) in the lower-left to 
+   select your favorite map.
+
+ - Use up and down arrow keys to scroll through trips.
+
+
+v0.91:  July 3, 2005
+--------------------
+ - Select a specific date and time to plan around, via the clock button
+   in the lower-left corner.
+
+ - Pressing spacebar while dragging a to/from marker makes it easier to
+   hit tightly-spaced stations.
+
+ - The widget checks for an updated version every few days, instead of 
+   just when first loaded.
+   
+
+v0.9:  June 23, 2005
+--------------------
+Initial released version.
+
