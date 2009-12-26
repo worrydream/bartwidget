@@ -109,7 +109,7 @@ function Stations () {
                          "Berkeley", "Ashby", "MacArthur" ],
         routeTo: function (dest) { 
             var north_lines = [ "red_richmond", "orange_richmond" ]
-            var south_lines = [ "red_dalycity", "orange_fremont" ]
+            var south_lines = [ "red_millbrae", "orange_fremont" ]
             var transfer_station = stations["MacArthur"]
             return routePeninsulaZone(this, dest, transfer_station, "Richmond", north_lines, south_lines)
         }
@@ -120,7 +120,7 @@ function Stations () {
                          "Lafayette", "Orinda", "Rockridge", "MacArthur" ],
         routeTo: function (dest) { 
             var north_lines = [ "yellow_pittsburg" ]
-            var south_lines = [ "yellow_dalycity" ]
+            var south_lines = [ "yellow_millbrae" ]
             var transfer_station = stations["MacArthur"]
             return routePeninsulaZone(this, dest, transfer_station, "Pittsburg", north_lines, south_lines)
         }
@@ -129,7 +129,7 @@ function Stations () {
     makeZone("Dublin", {
         station_names: [ "Bay Fair", "Castro Valley", "Dublin" ],
         routeTo: function (dest) { 
-            var north_lines = [ "blue_millbrae" ]
+            var north_lines = [ "blue_dalycity" ]
             var south_lines = [ "blue_dublin" ]
             var transfer_station = stations["Bay Fair"]
             return routePeninsulaZone(this, dest, transfer_station, "Dublin", north_lines, south_lines)
@@ -153,10 +153,12 @@ function Stations () {
         station_names: [ "San Bruno", "Millbrae" ],
         routeTo: function (dest) { 
             if (dest.isInZone("South SF") || dest.isInZone("Millbrae")) {
-                return Route.parallelLegs(this, dest, [ "red_richmond", "blue_dublin" ])
+                return Route.parallelLegs(this, dest, [ "red_richmond", "yellow_pittsburg" ])
             }
             if (dest.isInZone("SFO")) {
-                return routeThroughTransfer(this, dest, stations["San Bruno"])
+                var xfer_route = routeThroughTransfer(this, dest, stations["San Bruno"])
+                var direct_route = Route.leg(this, dest, "yellow_pittsburg")
+                return Route.parallel(direct_route, xfer_route)
             }
             return routeThroughTransfer(this, dest, stations["Balboa Park"]);
         }
@@ -164,12 +166,14 @@ function Stations () {
 
     makeZone("SFO", {
         station_names: [ "San Bruno", "SFO" ],
-        routeTo: function (dest) { 
+        routeTo: function (dest) {
             if (dest.isInZone("South SF") || dest.isInZone("SFO")) {
                 return Route.leg(this, dest, "yellow_pittsburg")
             }
             if (dest.isInZone("Millbrae")) {
-                return routeThroughTransfer(this, dest, stations["San Bruno"])
+                var xfer_route = routeThroughTransfer(this, dest, stations["San Bruno"])
+                var direct_route = Route.leg(this, dest, "yellow_millbrae")
+                return Route.parallel(direct_route, xfer_route)
             }
             return routeThroughTransfer(this, dest, stations["Balboa Park"]);
         }
@@ -182,7 +186,7 @@ function Stations () {
         station_names: [ "MacArthur", "19th St", "12th St" ],
         routeTo: function (dest) {
             var north_lines = ["red_richmond","orange_richmond","yellow_pittsburg"]
-            var south_lines = ["red_dalycity","orange_fremont","yellow_dalycity"]
+            var south_lines = ["red_millbrae","orange_fremont","yellow_millbrae"]
             if (dest.isInZone("North Oakland")) {
                 return routeWithinZone(this, dest, "North Oakland", north_lines, south_lines)
             }
@@ -196,7 +200,7 @@ function Stations () {
               "16th St", "24th St", "Glen Park", "Balboa Park" ],
         routeTo: function (dest) { 
             var north_lines = [ "red_richmond", "yellow_pittsburg", "green_fremont", "blue_dublin" ]
-            var south_lines = [ "red_dalycity", "yellow_dalycity", "green_dalycity", "blue_millbrae" ]
+            var south_lines = [ "red_millbrae", "yellow_millbrae", "green_dalycity", "blue_dalycity" ]
     
             if (dest.isInZone("San Francisco")) {
                 return routeWithinZone(this, dest, "San Francisco", north_lines, south_lines)
@@ -232,7 +236,7 @@ function Stations () {
         station_names:
             [ "Lake Merritt", "Fruitvale", "Coliseum", "San Leandro", "Bay Fair" ],
         routeTo: function (dest) {
-            var north_lines = [ "orange_richmond", "green_dalycity", "blue_millbrae" ]
+            var north_lines = [ "orange_richmond", "green_dalycity", "blue_dalycity" ]
             var south_lines = [ "orange_fremont", "green_fremont", "blue_dublin" ]
     
             if (dest.isInZone("South Oakland")) {
@@ -253,7 +257,7 @@ function Stations () {
                 return xfer_route
             }
             if (dest.isInZone("San Francisco")) {
-                var direct_route = Route.parallelLegs(this, dest, [ "green_dalycity", "blue_millbrae" ])
+                var direct_route = Route.parallelLegs(this, dest, [ "green_dalycity", "blue_dalycity" ])
                 return Route.parallel(xfer_route, direct_route)
             }
             if (dest.isInZone("South SF") || dest.isInZone("Millbrae") || dest.isInZone("SFO")) {
@@ -266,15 +270,15 @@ function Stations () {
         station_names: [ "Balboa Park", "Daly City", "Colma", "South SF", "San Bruno" ],
         routeTo: function (dest) {
             var north_lines = [ "red_richmond", "yellow_pittsburg", "green_fremont", "blue_dublin" ]
-            var south_lines = [ "red_dalycity", "yellow_dalycity", "green_dalycity", "blue_millbrae" ]
+            var south_lines = [ "red_millbrae", "yellow_millbrae", "green_dalycity", "blue_dalycity" ]
             if (dest.isInZone("South SF")) {
                 return routeWithinZone(this, dest, "South SF", north_lines, south_lines)
             }
             if (dest.isInZone("Millbrae")) {
-                return Route.parallelLegs(this, dest, [ "red_dalycity", "blue_millbrae" ]);
+                return Route.parallelLegs(this, dest, [ "yellow_millbrae", "red_millbrae" ]);
             }
             if (dest.isInZone("SFO")) {
-                return Route.leg(this, dest, "yellow_dalycity");
+                return Route.leg(this, dest, "yellow_millbrae");
             }
             return routeThroughTransfer(this, dest, stations["Balboa Park"]);
         }
@@ -284,10 +288,10 @@ function Stations () {
     // Transfer stations
     
     stations.MacArthur.routeTo = function (dest) {
-        var lines = dest.isInZone("North Oakland") ? ["red_dalycity", "yellow_dalycity", "orange_fremont" ]
+        var lines = dest.isInZone("North Oakland") ? ["red_millbrae", "yellow_millbrae", "orange_fremont" ]
                   : dest.isInZone("Pittsburg")     ? ["yellow_pittsburg"]
                   : dest.isInZone("Richmond")      ? ["red_richmond", "orange_richmond" ]
-                  : dest.isInZone("San Francisco") ? ["red_dalycity","yellow_dalycity"] 
+                  : dest.isInZone("San Francisco") ? ["red_millbrae","yellow_millbrae"] 
                   : dest.isInZone("South Oakland") ? ["orange_fremont"]
                   : null
     
@@ -315,7 +319,7 @@ function Stations () {
     
     stations["Balboa Park"].routeFromSanFranciscoTo = stations["24th St"].routeTo
     stations["Balboa Park"].routeTo = function (dest) {
-        var south_lines = [ "red_dalycity", "yellow_dalycity", "green_dalycity", "blue_millbrae" ]
+        var south_lines = [ "red_millbrae", "yellow_millbrae", "green_dalycity", "blue_dalycity" ]
         var is_south_sf = dest.isInZone("South SF") || dest.isInZone("SFO") || dest.isInZone("Millbrae");
 
         if (is_south_sf) { return Route.parallelLegs(this, dest, south_lines) }
@@ -333,13 +337,6 @@ function Stations () {
 // scheduling to check whether the line has an alternate name.
 //
 Stations.getNamerForLine = function (line_name) {
-    if (line_name == "blue_millbrae") {
-        return function (doesTrainGoToStation) {
-            return doesTrainGoToStation("Millbrae") ? "blue_millbrae"
-                 : doesTrainGoToStation("Daly City") ? "blue_dalycity"
-                 :                                    "blue_bayfair"
-        }
-    }
     if (line_name == "blue_dublin") {
         return function (doesTrainGoToStation) {
             return doesTrainGoToStation("Dublin") ? "blue_dublin"
@@ -352,7 +349,7 @@ Stations.getNamerForLine = function (line_name) {
                  :                                      "yellow_concord"
         }
     }
-    if (line_name == "yellow_dalycity") {
+    if (line_name == "yellow_millbrae") {
         return function (doesTrainGoToStation) {
             return doesTrainGoToStation("Millbrae")  ? "yellow_millbrae"
                  : doesTrainGoToStation("SFO")       ? "yellow_sfo"
@@ -361,6 +358,13 @@ Stations.getNamerForLine = function (line_name) {
                  :                                     "yellow_montgomery"
         }
     }
+    if (line_name == "red_millbrae") {
+        return function (doesTrainGoToStation) {
+            return doesTrainGoToStation("Millbrae")  ? "red_millbrae"
+                 :                                     "red_dalycity"
+        }
+    }
+
 }
 
 
