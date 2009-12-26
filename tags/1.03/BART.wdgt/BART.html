@@ -1,0 +1,218 @@
+<!-- 
+   BART.html is part of the BART dashboard widget.     (c) 2005 Bret Victor
+   This software is licensed under the terms of the open source MIT license.
+-->
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <!-- CSS -->
+    
+    <style type="text/css" title="AppleStyle">
+        @import "BART.css";
+    </style>
+
+    <!-- JavaScript -->
+    
+    <script type='text/javascript' src='Script/MiscUtils.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/ArrayUtils.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/DateUtils.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/SearchUtils.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/DrawUtils.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/Ramp.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/BackgroundAction.js' charset='utf-8'/>
+    
+    <script type='text/javascript' src='Script/Timetables.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/Fare.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/StationAddress.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/Stations.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/Route.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/Trip.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/TripList.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/Map.js' charset='utf-8'/>
+
+    <script type='text/javascript' src='Script/DrawText.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/DrawTrain.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/FolderUpper.js' charset='utf-8'/>
+
+    <script type='text/javascript' src='Script/TripListView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/MapbarView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/MapView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/TimebarView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/TitlebarView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/BottombarView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/BookmarksView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/SpeechBubbleView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/UpdateAvailableView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/FlipsideView.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/SpeakingView.js' charset='utf-8'/>
+
+    <script type='text/javascript' src='Maps/Alphabetical/info.js' charset='utf-8'/>
+    <script type='text/javascript' src='Maps/Classic/info.js' charset='utf-8'/>
+    <script type='text/javascript' src='Maps/Clean/info.js' charset='utf-8'/>
+    <script type='text/javascript' src='Maps/Euro/info.js' charset='utf-8'/>
+
+    <script type='text/javascript' src='Script/Excuses.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/Test.js' charset='utf-8'/>
+    <script type='text/javascript' src='Script/BART.js' charset='utf-8'/>
+
+</head>
+
+<body onload="bart.onLoad()">
+
+    <!-- front side HTML -->
+    
+    <div id='front' onmousemove= 'return bart.fireEvent(event)'
+                    onmousedown= 'return bart.fireEvent(event)'   
+                    onmousewheel='return bart.fireEvent(event)'   
+                    onmouseup=   'return bart.fireEvent(event)'
+                    onmouseover= 'return bart.fireEvent(event)'
+                    onmouseout=  'return bart.fireEvent(event)' />
+        <div id='bart_title_div'>
+            <div id='bart_titlebar'></div>
+            <div id='bart_titlebar_icon'></div>
+            <div id='bart_title'>From <span id='bart_from'>here</span> 
+                                   to <span id='bart_to'>there</span>: 
+                                      <span id='bart_fare'>$2.00</span>
+            </div>
+        </div>
+        <div id='bart_belowtitle_div'>
+            <div id='bart_map_div'>
+                <canvas id='bart_map_canvas' width='334' height='300' />
+            </div>
+            <div id='bart_belowmap_div'>
+                <div id='bart_triplist_div'>
+                    <canvas id='bart_triplist_canvas' width='334' height='155' />
+                    <div id='bart_triplist_help_div'>
+                      Drag or wheel to scroll.
+                    </div>
+                    <div id='bart_update_available_div'
+                         onmousedown='event.bart_target = event.currentTarget'>
+                      Update available.
+                    </div>
+                </div>
+                <div id='bart_small_speech_bubble'>
+                    <div id='bart_small_speech_bubble_top'>
+                        <p><span id='bart_speech_active_current' class='bart_speech_param' 
+                                 onmousedown='event.bart_target = event.currentTarget'>Do</span>
+                           announce these trains<span id='bart_speech_when_current'>
+                                <span id='bart_speech_advance_current' class='bart_speech_param'
+                                      onmousedown='event.bart_target = event.currentTarget'>5</span>
+                                minutes before they
+                                <span id='bart_speech_arrival_current' class='bart_speech_param'
+                                      onmousedown='event.bart_target = event.currentTarget'>depart</span></span>.
+                        </p>
+                    </div>
+                    <div id='bart_small_speech_bubble_tail'></div>
+                </div>
+                <div id='bart_lowerbars_div'>
+                    <div id='bart_lowerbars_top'></div>
+                    <div id='bart_timebar'>
+                        <div id='bart_timebar_buttons_image'></div>
+                        <div id='bart_timebar_icons'></div>
+                        <div id='bart_timebar_timeline'></div>
+                        <div id='bart_timebar_sun'></div>
+                        <div id='bart_timebar_sun_hover'></div>
+                        <div id='bart_timebar_date'>...</div>
+                        <div id='bart_timebar_date_left_button'></div>
+                        <div id='bart_timebar_date_right_button'></div>
+                    </div>
+                    <div id='bart_bottombar'>
+                        <div id='bart_buttons_image'></div>
+                        <div id='bart_clock_button'></div>
+                        <div id='bart_bookmark_button'></div>
+                        <div id='bart_announce_button'></div>
+                        <div id='bart_reverse_route_button'></div>
+                        <div id='bart_change_route_button'></div>
+                        <div id='bart_google_map_button'></div>
+                        <div id='bart_info_button'></div>
+                    </div>
+                </div>
+                <div id='bart_belowlowerbars_div'>
+                    <div id='bart_speech_bubble'>
+                        <div id='bart_speech_bubble_top'>
+                            <p><span id='bart_speech_active_fwd' class='bart_speech_param' 
+                                     onmousedown='event.bart_target = event.currentTarget'>Do</span>
+                                announce trains from
+                                <span id='bart_speech_where_fwd'>...</span><span id='bart_speech_when_fwd'>
+                                    <span id='bart_speech_arriving_fwd' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>departing</span> between
+                                    <span id='bart_speech_start_time_fwd' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>6:00 am</span> and
+                                    <span id='bart_speech_end_time_fwd' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>7:00 am</span> every
+                                    <span id='bart_speech_weekday_fwd' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>day</span>.  Announce
+                                    <span id='bart_speech_advance_fwd' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>5</span>
+                                    minutes before they
+                                    <span id='bart_speech_arrival_fwd' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>depart</span></span>.
+                            </p>
+                            <p><span id='bart_speech_active_rev' class='bart_speech_param' 
+                                     onmousedown='event.bart_target = event.currentTarget'>Do</span>
+                                announce trains from
+                                <span id='bart_speech_where_rev'>...</span><span id='bart_speech_when_rev'>
+                                    <span id='bart_speech_arriving_rev' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>departing</span> between
+                                    <span id='bart_speech_start_time_rev' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>6:00 am</span> and
+                                    <span id='bart_speech_end_time_rev' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>7:00 am</span> every
+                                    <span id='bart_speech_weekday_rev' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>day</span>.  Announce
+                                    <span id='bart_speech_advance_rev' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>5</span>
+                                    minutes before they
+                                    <span id='bart_speech_arrival_rev' class='bart_speech_param'
+                                          onmousedown='event.bart_target = event.currentTarget'>depart</span></span>.
+                            </p>
+                        </div>
+                        <div id='bart_speech_bubble_tail'></div>
+                    </div>
+                    <div id='bart_bookmarks'>
+                        <!-- Bookmark nodes are added here. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='bart_frontside_sticky'>
+            <div id='bart_frontside_tape'></div>
+            <div id='bart_frontside_sticky_note'>
+                <div id='bart_frontside_sticky_text'>
+                    <p>Thank you for your comment!</p>
+                    <p>-Bret</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- flip side HTML -->
+    
+    <div id='behind' onmousedown='return bart.fireEvent(event)'>
+        <div id='bart_flipside_card'>
+            <div id='bart_flipside_card_text'>
+                If you have any comments, please email me at 
+                <a href='mailto:bret@worrydream.com?&amp;subject=BART widget'>bret@worrydream.com</a>,
+                or leave an anonymous message below.  All feedback is welcome.
+            </div>
+			<textarea name='bart_flipside_textarea' id='bart_flipside_textarea'></textarea>
+            <div id='bart_done_cancel_buttons'>
+                <div id='bart_cancel_button'></div>
+                <div id='bart_done_button'></div>
+            </div>
+            <div id='bart_submit_button'></div>
+            <div id='bart_flipside_version_text' 
+                 onmousedown='event.bart_target = event.currentTarget'>v</div>
+        </div>
+        <div id='bart_flipside_sticky'>
+            <div id='bart_flipside_sticky_alltext'>
+                <div id='bart_flipside_sticky_text'>...</div>
+                <p>Thank you for riding BART instead of driving!</p>
+            </div>
+        </div>
+        <div id='bart_flipside_tape'></div>
+    </div>
+    
+</body>
+</html>
