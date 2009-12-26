@@ -23,13 +23,14 @@ function DrawTrain () {
     var head_width = 10
     var minimum_width = 24  // Enough to show first letter.
 
-    var line_list = [ "red_dalycity", "red_richmond", "blue_bayfair", 
+    var line_list = [ "red_millbrae", "red_richmond", "blue_bayfair", 
                       "yellow_pittsburg", "yellow_dalycity", 
                       "green_fremont", "green_dalycity",
                       "orange_fremont", "orange_richmond", 
                       "blue_dublin", "blue_millbrae",
                       "yellow_concord", "yellow_montgomery", "yellow_24th",
-                      "yellow_sfo", "yellow_millbrae", "blue_dalycity" ];
+                      "yellow_sfo", "yellow_millbrae",
+                      "blue_dalycity", "red_dalycity" ];
 
     var line_rows = {}      // line_row[0] = "red_richmond", etc
     for (var i=0; i < line_list.length; i++) { line_rows[line_list[i]] = i }
