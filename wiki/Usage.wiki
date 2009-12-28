@@ -1,4 +1,3 @@
-#labels Featured
 =The BART Widget=
 
 http://bartwidget.googlecode.com/files/widget_collapsed.png
