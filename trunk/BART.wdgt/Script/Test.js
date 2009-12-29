@@ -28,10 +28,10 @@ function Test () {
 
     var num_failures = 0
 
-    // If a widget is on the dashboard, alerts go to the console, which is nice.
-    // If you are testing in Safari, you'll probably want to change this.
+    // If a widget is on the dashboard, messages go to the system console.
+    // In Safari, messages go to the Web Inspector's Error Console.
     function say (message) { 
-        alert(message) 
+        console.debug(message) 
     }
 
     // Why isn't assert built into JavaScript?

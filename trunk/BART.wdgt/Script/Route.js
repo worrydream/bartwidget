@@ -31,6 +31,11 @@
 //  The getTripStarting... functions schedule from start to end, and
 //  the getTripEnding... functions schedule backwards from end to start.
 //
+//  TODO: There are still problems with trips having more transfers than necessary,
+//  due to the greedy scheduling here.  An example is Fremont to Millbrae at 7:30 
+//  on a weekday, which has three legs instead of two, regardless of whether it's
+//  scheduled forwards or backwards.
+//
 
 Route = {}
 
