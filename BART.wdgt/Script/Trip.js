@@ -11,8 +11,8 @@
 //    trip = Trip.leg(start_station, end_station, start_date, end_date, no_bikes, line_name)
 //    trip = Trip.series(trip1, trip2)
 //
-//  trips = route.getLegs()    // trips is array of one-leg trips
-//  length_of_trip = route.getMinutes()
+//  trips = trip.getLegs()    // trips is array of one-leg trips
+//  length_of_trip = trip.getMinutes()
 //
 //  Public properties:
 //

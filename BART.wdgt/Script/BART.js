@@ -77,7 +77,7 @@ function Bart () {
         }
         if (event.type == "mousemove" && message == last_log_message) { return }
         last_log_message = message
-        alert(message)
+        console.debug(message)
     }
     
     // This is pretty much a hack, because the system won't give me coordinates relative

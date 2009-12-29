@@ -131,6 +131,17 @@ function TripDataStructure (type, route, starting_date, starting_index, is_start
         if (next_trip.start_date.getTime() <= start_date.getTime()) {
             return getTripAfterDateRange(start_date, next_trip.end_date)
         }
+
+        // Sometimes routing backwards gives us a trip with more legs than necessary.
+        // This band-aid tries routing again from front-to-back, to see if we get a more efficient trip.
+        var trip_scheduled_from_beginning = route.getTripStartingAtOrAfter(next_trip.start_date)
+        if (!trip_scheduled_from_beginning.is_invalid &&
+            trip_scheduled_from_beginning.getLegs().length < next_trip.getLegs().length &&
+            trip_scheduled_from_beginning.start_date.getTime() == next_trip.start_date.getTime() &&
+            trip_scheduled_from_beginning.end_date.getTime()   == next_trip.end_date.getTime()) {
+            return trip_scheduled_from_beginning;
+        }
+
         return next_trip
     }
 
