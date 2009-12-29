@@ -114,15 +114,15 @@ function isDateHoliday (date) {
     var day = date.getDate()
     
     return (month ==  1 && day ==  1)                   // New Years Day
-        || (month ==  2 && day == 18 && year == 2008)   // Presidents Day 2008
-        || (month ==  2 && day == 16 && year == 2009)   // Presidents Day 2009
-        || (month ==  5 && day == 26 && year == 2008)   // Memorial Day 2008
-        || (month ==  5 && day == 25 && year == 2009)   // Memorial Day 2009
-        || (month ==  7 && day ==  4)                   // Independence Day
-        || (month ==  9 && day ==  1 && year == 2008)   // Labor Day 2008
-        || (month ==  9 && day ==  7 && year == 2009)   // Labor Day 2009
-        || (month == 11 && day == 27 && year == 2008)   // Thanksgiving 2008
-        || (month == 11 && day == 26 && year == 2009)   // Thanksgiving 2009
+        || (month ==  2 && day == 15 && year == 2010)   // Presidents Day 2010
+        || (month ==  2 && day == 21 && year == 2011)   // Presidents Day 2011
+        || (month ==  5 && day == 31 && year == 2010)   // Memorial Day 2010
+        || (month ==  5 && day == 30 && year == 2011)   // Memorial Day 2011
+//      || (month ==  7 && day ==  4)                   // Independence Day
+        || (month ==  9 && day ==  6 && year == 2010)   // Labor Day 2010
+        || (month ==  9 && day ==  5 && year == 2011)   // Labor Day 2011
+        || (month == 11 && day == 25 && year == 2010)   // Thanksgiving 2010
+        || (month == 11 && day == 24 && year == 2011)   // Thanksgiving 2011
         || (month == 12 && day == 25)                   // Xmas Day
 }
 
