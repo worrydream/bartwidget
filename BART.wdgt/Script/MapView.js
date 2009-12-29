@@ -139,6 +139,7 @@ function MapView (canvas, reverse_route_button, google_map_button, bookmark_butt
             context.lineCap = "round"
             context.lineWidth = 6
             
+            context.beginPath();
             context.moveTo(marker_x,marker_y)
             context.lineTo(station_x,station_y)
             context.stroke()
