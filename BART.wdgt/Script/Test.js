@@ -14,7 +14,7 @@ function Test () {
 
     // Verbosity.
     var announce_from_station = true
-    var announce_to_station   = true
+    var announce_to_station   = false
     var announce_time         = false
 
     // Narrow down the test.  If undefined, tests all.
@@ -96,7 +96,7 @@ function Test () {
         for (var i = -8; i < 8; i++) {
             var this_trip = trip_list.getTripByIndex(i)
             var prev_trip = trip_list.getTripByIndex(i-1)
-            assert(this_trip.getMinutes() < 120, "length of " + i + message)
+            assert(this_trip.getMinutes() < 150, "length of " + i + message)
             assert(this_trip.start_date.getTime() > 
                    prev_trip.start_date.getTime(),  "start of " + i + message)
             assert(this_trip.end_date.getTime() > 
