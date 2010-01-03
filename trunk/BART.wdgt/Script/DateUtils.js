@@ -102,27 +102,12 @@ function isDateWeekend (date) {
     return (day_of_week == 0 || day_of_week == 6)
 }
 
-// Beware the Y2010 bug!  These are the variable holidays:
-//   Presidents Day      3rd Monday in February
-//   Memorial Day        last Monday in May
-//   Labor Day           1st Monday in September
-//   Thanksgiving Day    4th Thursday in November
-
-function isDateHoliday (date) {
-    var year = date.getFullYear()
-    var month = date.getMonth() + 1
-    var day = date.getDate()
-    
-    return (month ==  1 && day ==  1)                   // New Years Day
-        || (month ==  2 && day == 15 && year == 2010)   // Presidents Day 2010
-        || (month ==  2 && day == 21 && year == 2011)   // Presidents Day 2011
-        || (month ==  5 && day == 31 && year == 2010)   // Memorial Day 2010
-        || (month ==  5 && day == 30 && year == 2011)   // Memorial Day 2011
-//      || (month ==  7 && day ==  4)                   // Independence Day
-        || (month ==  9 && day ==  6 && year == 2010)   // Labor Day 2010
-        || (month ==  9 && day ==  5 && year == 2011)   // Labor Day 2011
-        || (month == 11 && day == 25 && year == 2010)   // Thanksgiving 2010
-        || (month == 11 && day == 24 && year == 2011)   // Thanksgiving 2011
-        || (month == 12 && day == 25)                   // Xmas Day
+Date.prototype.toMMDDYYYYString = function () {
+    return isNaN (this) ? 'NaN' 
+    : [ this.getMonth() > 8 ? this.getMonth() + 1 
+                           : '0' + (this.getMonth() + 1), 
+        this.getDate() > 9 ? this.getDate() 
+                           : '0' + this.getDate(),
+        this.getFullYear()].join('/')
 }
 
