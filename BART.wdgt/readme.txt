@@ -53,6 +53,7 @@ Additional UI utilities:
 BART data:
 
 * Fare.js                 Station-to-station fare calculation.  Generated.
+* Holiday.js              List of holidays and service levels.  Generated.
 * StationAddress.js       Station street addresses for Googlemapping.
 * Timetables.js           When the trains arrive where.  Generated.
 
@@ -81,6 +82,7 @@ Code generator:
 
   make_timetables.pl      Perl script to generate Timetables.js.
   make_fare.pl            Perl script to generate Fare.js.
+  make_holiday.pl         Perl script to generate Holiday.js
 
 ...........................................................................
 

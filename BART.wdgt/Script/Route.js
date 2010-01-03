@@ -170,12 +170,7 @@ Route.leg = function (start_station, end_station, line_name) {
                            getIndexOfBestInteger, getIndexOfBestNonEqualInteger) {
 
         function getTimetable (morning) {
-            var day_of_week = morning.getDay()
-            var timetable_name = isDateHoliday(morning) ? "sunday"
-                               : (day_of_week == 0)     ? "sunday"
-                               : (day_of_week == 6)     ? "saturday"
-                               :                          "weekday"
-    
+            var timetable_name = Holiday.getServiceLevel(morning)
             return timetables[line_name][timetable_name]
         }
     
