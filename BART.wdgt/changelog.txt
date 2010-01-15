@@ -8,10 +8,16 @@
 This document lists major changes.  All sorts of minor details
 change between releases, but you don't really care about them.
 
+v1.04:  January 14, 2010
+-----------------------
+ - Schedules, maps, fares, and holidays updated.
 
-v1.02:  January 2, 2008
---------------------
+
+v1.03:  January 2, 2008
+-----------------------
  - Schedules, maps, and fares updated for 2008.
+
+ - v1.02 did not work on Tiger.  That has been fixed.
 
 
 v1.01:  June 2, 2007
