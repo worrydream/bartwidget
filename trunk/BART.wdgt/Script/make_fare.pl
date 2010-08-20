@@ -1,6 +1,7 @@
 #! /usr/bin/perl -w
 #---------------------------------------------------------------------------------
 #  make_fare.pl is part of the BART dashboard widget.  (c) 2008 Bret Victor
+#                                                      (c) 2010 Bradley Froehle
 #  This software is licensed under the terms of the open source MIT license.
 #---------------------------------------------------------------------------------
 #
@@ -9,9 +10,12 @@
 #  Downloads the line schedules from bart.gov and generates a JavaScript
 #  fare table on stdout.  This becomes the Fare.js file.
 #
+# (Requires LWP::Simple & XML::Simple.  Found in MacPorts p5-libwww-perl & p5-xml-simple.)
 
 
 use strict;
+use LWP::Simple;
+use XML::Simple;
 
 #-----------------------------------------------------------------
 #  Tables
@@ -76,13 +80,14 @@ my %station_names = (
 #  Main code
 
 my %fares;
+my $xml = new XML::Simple;
 
 for my $from_station (sort keys %station_names) {
     warn "from $station_names{$from_station}...\n";
     for my $to_station (sort keys %station_names) {
         my $url = makeUrl($from_station, $to_station);
-        my $html = getFromUrl($url);
-        my $fare = getFareFromHtml($html);
+        my $content = get($url);
+        my $fare = getFareFromXml($content);
         $fares{$station_names{$from_station}}{$station_names{$to_station}} = $fare;
     }
 }
@@ -95,24 +100,15 @@ exit();
 
 sub makeUrl {
     my ($from_station, $to_station) = @_;
-
-    return "http://bart.gov/scripts/aspx/fare_calc_ajax.aspx?orig=$from_station" .
-           "&dest=$to_station&trip=one-way";
+    return "http://api.bart.gov/api/sched.aspx?cmd=fare&orig=$from_station" .
+           "&dest=$to_station&date=today&key=MW9S-E7SL-26DU-VV8V";
 }
 
-sub getFromUrl {
-    my ($url) = @_;
-    # I'd rather use LWP, but I can't get CPAN to work.
-
-    # If you'd rather use wget:
-    # return `wget --quiet -O - '$url'`;
-    return `curl --silent '$url'`;
-}
-
-sub getFareFromHtml {
-    my ($html) = @_;
-    my ($dollars,$cents) = ($html =~ /<strong>\$(\d+)\.(\d+)/);
-    unless (defined $dollars) { die "could not understand this:\n\n$html\n"; }
+sub getFareFromXml {
+    my ($content) = @_;
+    my $data = $xml->XMLin($content);
+    my ($dollars,$cents) = ($data->{trip}->{fare} =~ /(\d+)\.(\d+)/);
+    unless (defined $dollars) { die "could not understand this:\n\n$content\n"; }
     return 100 * $dollars + $cents;
 }
 

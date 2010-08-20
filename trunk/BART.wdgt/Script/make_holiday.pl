@@ -1,6 +1,7 @@
 #! /usr/bin/perl -w
 #---------------------------------------------------------------------------------
 #  make_holiday.pl is part of the BART dashboard widget.  (c) 2005 Bret Victor
+#                                                         (c) 2010 Bradley Froehle
 #  This software is licensed under the terms of the open source MIT license.
 #---------------------------------------------------------------------------------
 #
@@ -9,8 +10,11 @@
 #  Downloads the holiday service levels from bart.gov and generates a JavaScript
 #  holiday list on stdout.  This becomes the Holiday.js file.
 # 
+# (Requires LWP::Simple & XML::Simple.  Found in MacPorts p5-libwww-perl & p5-xml-simple.)
 
 use strict;
+use LWP::Simple;
+use XML::Simple;
 
 #-----------------------------------------------------------------
 #  Main code
@@ -18,39 +22,27 @@ use strict;
 print STDERR "Generating holidays...\n";
 
 print getHeader();
-my $url = makeBartUrl();
-my $html = getFromUrl($url);
-print parseHtml($html);
+
+my $content = get("http://api.bart.gov/api/sched.aspx?cmd=holiday&key=MW9S-E7SL-26DU-VV8V");
+my $xml = new XML::Simple;
+my $data = $xml->XMLin($content, KeyAttr => []);
+
+print parseXml($data);
 print getFooter();
 exit();
 
-
 #-----------------------------------------------------------------
-#  Main subroutines
+#  Bart XML input parsing
 
-sub makeBartUrl {
-    return "http://www.bart.gov/guide/holidays.aspx"
-}
-
-sub getFromUrl {
-    my ($url) = @_;
-    # I'd rather use LWP, but I can't get CPAN to work.
-    # return `wget --quiet -O - $url`;
-    return `curl --silent '$url'`;
-}
-
-#-----------------------------------------------------------------
-#  Bart HTML input parsing
-
-sub parseHtml {
-    my ($html) = @_;
+sub parseXml {
+    my ($data) = @_;
     my $out = "\n    servicelevel = {}\n";
 
-    # Jump ahead to avoid matching some earlier tables.
-    $html =~ m{<p><strong>Service</strong></p>}g;
-    while ($html =~ m{<!-- (.*?) --><p></td><td><p>(.*?)<p></td></tr>}gs) {
-        my ($date, $service) = ($1, $2);
-        $service = lc($service);
+    foreach my $holiday (@{$data->{holidays}->{holiday}})
+    {
+        my $date = $holiday->{date};
+        my $service = lc($holiday->{schedule_type});
+        # my $name = $holiday->{name};
         $out .= "    servicelevel['$date'] = '$service'\n";
     }
     
