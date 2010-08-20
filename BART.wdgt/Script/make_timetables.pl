@@ -1,16 +1,22 @@
 #! /usr/bin/perl -w
 #---------------------------------------------------------------------------------
 #  make_timetables.pl is part of the BART dashboard widget.  (c) 2005 Bret Victor
+#                                                            (c) 2010 Bradley Froehle
 #  This software is licensed under the terms of the open source MIT license.
 #---------------------------------------------------------------------------------
 #
 #  perl make_timetables.pl > Timetables.js
 #
+#  [Be sure to update %day_names appropriately!]
+#
 #  Downloads the line schedules from bart.gov and generates a JavaScript
 #  timetable on stdout.  This becomes the Timetables.js file.
 # 
+# (Requires LWP::Simple & XML::Simple.  Found in MacPorts p5-libwww-perl & p5-xml-simple.)
 
 use strict;
+use LWP::Simple;
+use XML::Simple;
 
 #-----------------------------------------------------------------
 #  Tables
@@ -31,9 +37,9 @@ my %line_names = (
 );
 
 my %day_names = (
-    weekday  => '12/18/2009',
-    saturday => '12/19/2009',
-    sunday   => '12/20/2009',
+    weekday  => '9/17/2010',
+    saturday => '9/18/2010',
+    sunday   => '9/19/2010',
 );
 
 my %station_names = (
@@ -90,6 +96,7 @@ my %station_names = (
     DUBL => "Dublin",
 );
 
+my $xml = new XML::Simple;
 
 #-----------------------------------------------------------------
 #  Main code
@@ -106,8 +113,9 @@ for my $line_name (sort keys %line_names) {
         print STDERR "Generating $js_array_name...\n";
         print "$js_array_name = {};\n";
         my $url = makeBartUrl($line_name, $day_name);
-        my $html = getFromUrl($url);
-        my $js = translateHtml($html,$js_array_name);
+        my $content = get($url);
+        my $data = $xml->XMLin($content);
+        my $js = translateXml($data,$js_array_name);
         print $js;
     }
 }
@@ -121,19 +129,12 @@ exit();
 sub makeBartUrl {
     my ($line_name, $day_name) = @_;
     my ($srcdst, $daycode) = ($line_names{$line_name}, $day_names{$day_name});
-    return "http://www.bart.gov/schedules/bylineresults.aspx?route=${srcdst}&date=${daycode}"
+    return "http://api.bart.gov/api/sched.aspx?cmd=routesched&route=${srcdst}&date=${daycode}&key=MW9S-E7SL-26DU-VV8V"
 }
 
-sub getFromUrl {
-    my ($url) = @_;
-    # I'd rather use LWP, but I can't get CPAN to work.
-    # return `wget --quiet -O - $url`;
-    return `curl --silent '$url'`;
-}
-
-sub translateHtml {
-    my ($html,$js_array_name) = @_;
-    my ($station_timetables, $bike_boundaries) = parseHtml($html);
+sub translateXml {
+    my ($data,$js_array_name) = @_;
+    my ($station_timetables, $bike_boundaries) = parseXml($data);
     my $text = translateStationTimetables($station_timetables, $js_array_name);
     $text .=   translateBikeBoundaries($bike_boundaries, $js_array_name);
     return $text;
@@ -141,10 +142,10 @@ sub translateHtml {
 
 
 #-----------------------------------------------------------------
-#  Bart HTML input parsing
+#  Bart XML input parsing
 
-sub parseHtml {
-    my ($html) = @_;
+sub parseXml {
+    my ($data) = @_;
     my $station_timetables = {};
     my $bike_boundaries = [];
     
@@ -152,8 +153,8 @@ sub parseHtml {
     my $last_no_bikes_station;
     
     my $checkForBikeBoundary = sub {
-        my ($no_bikes, $station) = @_;
-        if ($no_bikes =~ /shaded/) {
+        my ($bikes_ok, $station) = @_;
+        if (!$bikes_ok) {
             $first_no_bikes_station ||= $station;
             $last_no_bikes_station = $station;
         }
@@ -172,19 +173,25 @@ sub parseHtml {
     };
     
     my $must_be_pm = 0;
-    # Jump ahead to avoid matching some earlier tables.
-    $html =~ m{<p class="bike-hours">}g;
-    while ($html =~ m{<td class="(.*?)" headers="id(\w+)" style=".*?">\s*(.*?)\s*?</td>}gs) {
-        my ($no_bikes, $station, $time) = ($1, $2, $3);
-        my ($hour, $min) = (-1, -1);
-        if ($time =~ /(\d+):(\d+)/) {
-            ($hour, $min) = ($1, $2);
-            if ($hour == 2) { $must_be_pm = 1; }
+
+    foreach my $train (@{$data->{route}->{train}})
+    {
+        foreach my $stop (@{$train->{stop}})
+        {
+            
+            my ($station, $time, $bikes_ok) = ($stop->{station}, $stop->{origTime}, $stop->{bikeflag});
+            my ($hour, $min) = (-1, -1);
+            if ($time && $time =~ /(\d+):(\d+)/) {
+                ($hour, $min) = ($1, $2);
+                if ($hour == 2) { $must_be_pm = 1; }
+            } else {
+                # Fix weirdness where BART says bikes are prohibited at places where trains do not run!
+                $bikes_ok = 1;
+            }
+            $addStop->($station, $hour, $min, $must_be_pm);
+            $checkForBikeBoundary->($bikes_ok, $station);
         }
-        $addStop->($station, $hour, $min, $must_be_pm);
-        $checkForBikeBoundary->($no_bikes, $station);
     }
-    
     return ($station_timetables, $bike_boundaries);
 }
 
