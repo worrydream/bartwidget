@@ -212,19 +212,20 @@ function Stations () {
                 return routeThroughTransfer(this, dest, stations["Balboa Park"])
             }
             
-            var xfer_route = routeThroughTransfer(this, dest, stations["12th St"])
+            var xfer_route_north = routeThroughTransfer(this, dest, stations["19th St"])
+            var xfer_route_south = routeThroughTransfer(this, dest, stations["12th St"])
             if (dest.isInZone("Pittsburg") || dest.isInZone("Richmond")) {
-                return xfer_route
+                return xfer_route_north
             }
             if (dest.isInZone("South Oakland")) {
                 var direct_route = Route.parallelLegs(this, dest, [ "green_fremont", "blue_dublin" ])
-                return Route.parallel(xfer_route, direct_route)
+                return Route.parallel(xfer_route_south, direct_route)
             }
             if (dest.isInZone("Fremont")) {
                 var direct_route = Route.parallelLegs(this, dest, [ "green_fremont" ])
                 var direct_route_2 = Route.series(Route.leg(this, stations["Bay Fair"], "blue_dublin"),
                                                   stations["Bay Fair"].routeTo(dest))
-                return Route.parallel(xfer_route, Route.parallel(direct_route, direct_route_2))
+                return Route.parallel(xfer_route_south, Route.parallel(direct_route, direct_route_2))
             }
             if (dest.isInZone("Dublin")) {
                 return Route.parallelLegs(this, dest, [ "blue_dublin" ])
@@ -252,13 +253,14 @@ function Stations () {
                 return Route.parallelLegs(this, dest, [ "orange_fremont", "green_fremont" ])
             }
             
-            var xfer_route = routeThroughTransfer(this, dest, stations["12th St"])
+            var xfer_route_north = routeThroughTransfer(this, dest, stations["19th St"])
+            var xfer_route_south = routeThroughTransfer(this, dest, stations["12th St"])
             if (dest.isInZone("Pittsburg") || dest.isInZone("Richmond")) {
-                return xfer_route
+                return xfer_route_north
             }
             if (dest.isInZone("San Francisco")) {
                 var direct_route = Route.parallelLegs(this, dest, [ "green_dalycity", "blue_dalycity" ])
-                return Route.parallel(xfer_route, direct_route)
+                return Route.parallel(xfer_route_south, direct_route)
             }
             if (dest.isInZone("South SF") || dest.isInZone("Millbrae") || dest.isInZone("SFO")) {
                 return routeThroughTransfer(this, dest, stations["Balboa Park"])
