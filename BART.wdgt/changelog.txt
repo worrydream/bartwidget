@@ -8,8 +8,17 @@
 This document lists major changes.  All sorts of minor details
 change between releases, but you don't really care about them.
 
+v1.05:  September 13, 2010
+--------------------------
+ - Schedules and holidays updated.
+ - Routing directions changed to reflect northbound transfers at 
+   19th St/Oakland (instead of Oakland City Center/12th St).
+ - Scripts to generate fares, schedules, and holidays rewritten to use 
+   api.bart.gov.
+
+
 v1.04:  January 14, 2010
------------------------
+------------------------
  - Schedules, maps, fares, and holidays updated.
 
 
