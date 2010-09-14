@@ -1,0 +1,696 @@
+\/*-----------------------------------------------------------------------------
+**  BART.css is part of the BART dashboard widget.       (c) 2005 Bret Victor
+**  This software is licensed under the terms of the open source MIT license.
+**-----------------------------------------------------------------------------
+*/
+
+body {
+	margin:0;
+}
+
+
+/*----------------------------------------------------------------
+**  Title bar
+*/
+
+#bart_title_div {
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+
+#bart_titlebar {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:0px;
+    height:31px;
+    z-index:20;
+    background-image:  url("Images/titlebar.png");
+}
+
+#bart_titlebar_icon {
+    position:absolute;
+    left:0px;
+    width:52px;
+    top:0px;
+    height:42px;
+    z-index:120;
+    background-image:  url("Images/titlebar_icon.png");
+}
+
+#bart_title {
+	color: #ffffff;
+	text-shadow: #3030E0 0px 2px 4px;
+	font: 13.5px "Optima", sans-serif;
+	font-weight: bold;
+  	text-align: left;
+	position: absolute;
+	overflow:hidden;
+	white-space:nowrap;
+	top: 9px;
+	left: 60px;
+	width: 282px;
+	height: 28px;
+	z-index:30;
+}
+
+#bart_from {
+	color: #FFFFB0;
+}
+
+#bart_to {
+	color: #FFFFB0;
+}
+
+#bart_belowtitle_div {
+    position:absolute;
+    left:0px;
+    top:31px;
+}
+
+/*----------------------------------------------------------------
+**  Map
+*/
+
+#bart_map_div {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:0px;
+    height:0px;     /* Changed when map folds out. */
+    z-index:10;
+    overflow:hidden;
+    background-image:  url("Images/middle.png");
+	background-repeat:  repeat-y;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_map_canvas {
+    position:absolute;
+	left:8px;
+	top:0px;
+}
+
+#bart_belowmap_div {
+    position:absolute;
+	left:0px;
+	top:0px;       /* Changed when map folds out. */
+}
+
+/*----------------------------------------------------------------
+**  Trip List
+*/
+
+#bart_triplist_div {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:0px;
+    height:155px;
+    z-index:20;
+    cursor:move;
+    background-image:  url("Images/middle.png");
+	background-repeat:  repeat-y;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_triplist_canvas {
+    position:absolute;
+	left:8px;
+	top:0px;
+}
+
+#bart_triplist_help_div {
+    position:absolute;
+	color: #606060;
+	font: 10px "Optima", sans-serif;
+  	text-align: left;
+	overflow: hidden;
+	top: 131px;
+	left: 11px;
+	width: 68px;
+	height: 24px;
+    opacity:1;
+	visibility: visible;
+	z-index:60;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_update_available_div {
+    position:absolute;
+	color: #606060;
+	font: 10px "Optima", sans-serif;
+	font-weight: bold;
+  	text-align: left;
+	overflow: hidden;
+	white-space:nowrap;
+	top: 144px;
+	left: 10px;
+	width: 78px;
+	height: 14px;
+	visibility:hidden;
+	z-index:60;
+	cursor:pointer;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+/*----------------------------------------------------------------
+**  Time bar
+*/
+
+#bart_lowerbars_div {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:155px;
+    height:29px;    /* Changed to 45 when timebar expands. */
+	overflow:hidden;
+    z-index:20;
+    background:  url("Images/bottombar.png") bottom left;
+}
+
+#bart_lowerbars_top {
+    position:absolute;
+    left:8px;
+    width:334px;
+    top:0px;
+    height:8px;
+    z-index:30;
+    background:  url("Images/bottombar_top.png") top left;
+}
+
+#bart_timebar {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:0px;
+    height:0px;    /* Changed to 16 when timebar expands. */
+	overflow:hidden;
+    z-index:40;
+}
+
+#bart_timebar_buttons_image {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:0px;
+    height:16px;
+    z-index:130;
+    opacity:0;
+    background-image:  url("Images/timebar_buttons.png");
+}
+
+#bart_timebar_icons {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:0px;
+    height:16px;
+    z-index:130;
+    background-image:  url("Images/timebar_icons.png");
+}
+
+#bart_timebar_timeline {
+    position:absolute;
+    left:41px;
+    width:137px;
+    top:4px;
+    height:12px;
+    z-index:160;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_timebar_sun {
+    position:absolute;
+    left:60px;
+    width:12px;
+    top:4px;
+    height:12px;
+    z-index:140;
+    background-image:  url("Images/timebar_sun.png");
+}
+
+#bart_timebar_sun_hover {
+    position:absolute;
+    left:100px;
+    width:12px;
+    top:4px;
+    height:12px;
+    z-index:150;
+    opacity:0;
+    background-image:  url("Images/timebar_sun_hover.png");
+}
+
+#bart_timebar_date {
+    position:absolute;
+	color: #ffffff;
+	font: 9px "Optima", sans-serif;
+    text-antialiasing: true;
+  	text-align: right;
+	overflow: hidden;
+	white-space:nowrap;
+    left:194px;
+    width:110px;
+    top:5px;
+    height:12px;
+    z-index:140;
+}
+
+#bart_timebar_date_left_button {
+    position:absolute;
+    left:310px;
+    width:13px;
+    top:4px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/timebar_arrow_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_timebar_date_right_button {
+    position:absolute;
+    left:323px;
+    width:13px;
+    top:4px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/timebar_arrow_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+/*----------------------------------------------------------------
+**  Bottom bar
+*/
+
+#bart_bottombar {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:0px;        /* Changed to 16 when timebar expands. */
+    height:29px;
+    z-index:40;
+}
+
+#bart_buttons_image {
+    position:absolute;
+    left:0px;
+    width:350px;
+    top:0px;
+    height:29px;
+    z-index:130;
+    opacity:0;
+    background-image:  url("Images/buttons.png");   /* Changed when the map expands. */
+}
+
+#bart_clock_button {
+    position:absolute;
+    left:17px;
+    width:22px;
+    top:3px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/i_button_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_bookmark_button {
+    position:absolute;
+    left:41px;
+    width:22px;
+    top:3px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/i_button_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_announce_button {
+    position:absolute;
+    left:65px;
+    width:22px;
+    top:3px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/i_button_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_reverse_route_button {
+    position:absolute;
+    left:89px;
+    width:80px;
+    top:3px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/button_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_change_route_button {
+    position:absolute;
+    left:171px;
+    width:80px;
+    top:3px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/button_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_google_map_button {
+    position:absolute;
+    left:253px;
+    width:56px;
+    top:3px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/button_small_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_info_button {
+    position:absolute;
+    left:311px;
+    width:22px;
+    top:3px;
+    height:12px;
+    z-index:140;
+    opacity:0;
+    background-image:  url("Images/i_button_hover.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+
+/*----------------------------------------------------------------
+**  Small speech bubble (for current route)
+*/
+
+#bart_small_speech_bubble {
+    position:absolute;
+    left:21px;
+    top:86px;       /* Set when the speech bubble is displayed. */
+    z-index:200;
+    display: none;
+    opacity: 0;
+}
+
+#bart_small_speech_bubble_top {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:285px;   /* plus 23px padding */
+    height:51px;  /* plus 5px padding */
+    padding-top:5px;
+    padding-left:23px;
+    z-index:200;
+    background-image: url("Images/speech_bubble_small_top.png");
+	font: 10px "Optima", sans-serif;
+  	text-align: left;
+}
+
+#bart_small_speech_bubble_tail {
+    position:absolute;
+    left:57px;
+    top:56px;
+    width:35px;
+    height:27px;
+    z-index:200;
+    background-image: url("Images/speech_bubble_small_tail.png");
+}
+
+.bart_speech_param {
+    color: #802020;
+    font-weight: bold;
+}
+
+.bart_speech_param:hover {
+    text-decoration: underline;
+}
+
+
+/*----------------------------------------------------------------
+**  Bookmarks
+*/
+
+#bart_belowlowerbars_div {
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+
+#bart_bookmarks {
+    position:absolute;
+    left:30px;
+    top:-25px;
+    z-index:5;
+    width:275px;
+    height:206px;
+    background-image:    url("Images/bookmarks.png");
+    background-position: bottom;
+	color: #404040;
+	font: 9px "Optima", sans-serif;
+  	text-align: left;
+}
+
+/*----------------------------------------------------------------
+**  Speech bubble (for bookmarks)
+*/
+
+#bart_speech_bubble {
+    position:absolute;
+    left:21px;
+    top:0px;       /* Set when the speech bubble is displayed. */
+    z-index:200;
+    display: none;
+    opacity: 0;
+}
+
+#bart_speech_bubble_top {
+    position:absolute;
+    left:0px;
+    top:-141px;
+    width:272px;   /* plus 42px padding */
+    height:120px;  /* plus 3px padding */
+    padding-top:3px;
+    padding-left:20px;
+    padding-right:22px;
+    background-image: url("Images/speech_bubble_top.png");
+	font: 10px "Optima", sans-serif;
+  	text-align: left;
+}
+
+#bart_speech_bubble_tail {
+    position:absolute;
+    left:50px;
+    top:-18px;
+    width:35px;
+    height:27px;
+    background-image: url("Images/speech_bubble_tail.png");
+}
+
+
+/*----------------------------------------------------------------
+**  Frontside sticky.  ("Thank you for your comment.")
+*/
+
+#bart_frontside_sticky {
+	position:absolute;
+	top:8px;
+	left:86px;
+    z-index:30;
+    visibility: hidden;
+    opacity:1;
+}
+
+#bart_frontside_tape {
+	position:absolute;
+	top:2px;
+	left:73px;
+	width:52px;
+	height:61px;
+    z-index:60;
+    background-image:  url("Images/tape.png");
+}
+
+#bart_frontside_sticky_note {
+	position:absolute;
+	top:14px;
+	left:0px;
+	width:182px;
+	height:167px;
+    z-index:40;
+    background-image:  url("Images/sticky.png");
+}
+
+#bart_frontside_sticky_text {
+	color: #300000;
+	font: 11px "Optima", sans-serif;
+  	text-align: left;
+	position: absolute;
+    background-color:transparent;
+	top:24px;
+	left:20px;
+	width:136px;
+	height:125px;
+	z-index:50;
+}
+
+
+
+/*----------------------------------------------------------------
+**  Flip side card
+*/
+
+#behind {
+	position:absolute;
+	top:0px;
+	left:0px;
+	display:none;
+}
+
+#bart_flipside_card {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:350px;
+	height:214px;
+    background-image: url("Images/flipside.png");
+}
+
+#bart_flipside_card_text {
+	color: #ffffff;
+	font: 11px "Optima", sans-serif;
+  	text-align: left;
+	position: absolute;
+	top:18px;
+	left:26px;
+	width:270px;
+	height:50px;
+	z-index:30;
+}
+
+a { text-decoration:none; }
+a:link    { color: #ffffcf; }
+a:visited { color: #ffffcf; }
+a:hover   { color: #ffffa8; text-decoration:underline; }
+
+#bart_flipside_textarea {
+	color: #ffffff;
+	font: 10px "Optima", sans-serif;
+	font-weight: bold;
+  	text-align: left;
+	position: absolute;
+	overflow:hidden;
+	white-space:nowrap;
+    background-color:transparent;
+	top:70px;
+	left:26px;
+	width:298px;
+	height:80px;
+	z-index:40;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_done_cancel_buttons {
+	position:absolute;
+	top:163px;
+	left:260px;
+	width:64px;
+	height:23px;
+    z-index:50;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_cancel_button {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:64px;
+	height:23px;
+    z-index:51;
+    opacity:0;
+    background-image: url("Images/cancel.png");
+}
+
+#bart_done_button {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:64px;
+	height:23px;
+    z-index:52;
+    opacity:1;
+    background-image: url("Images/done.png");
+}
+
+#bart_submit_button {
+	position:absolute;
+	top:163px;
+	left:124px;
+	width:126px;
+	height:23px;
+    z-index:50;
+    opacity:0.4;
+    background-image: url("Images/submit_comment.png");
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+#bart_flipside_version_text {
+	color: #8f8f8f;
+	font: 11px "Optima", sans-serif;
+  	text-align: left;
+	position: absolute;
+	top:168px;
+	left:26px;
+	width:30px;
+	height:23px;
+	z-index:50;
+	cursor:pointer;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+
+/*----------------------------------------------------------------
+**  Flip side sticky.
+*/
+
+#bart_flipside_sticky {
+	position:absolute;
+	top:224px;
+	left:86px;
+	width:182px;
+	height:167px;
+    background-image:  url("Images/sticky.png");
+}
+
+#bart_flipside_sticky_alltext {
+	color: #300000;
+	font: 10px "Optima", sans-serif;
+  	text-align: left;
+	position: absolute;
+    background-color:transparent;
+	top:12px;
+	left:20px;
+	width:136px;
+	height:125px;
+	z-index:30;
+}
+
+#bart_flipside_tape {
+	position:absolute;
+	top:190px;
+	left:143px;
+	width:52px;
+	height:61px;
+    z-index:50;
+    background-image:  url("Images/tape.png");
+}
