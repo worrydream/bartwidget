@@ -30,7 +30,7 @@ function DrawTrain () {
                       "blue_dublin", "blue_millbrae",
                       "yellow_concord", "yellow_montgomery", "yellow_24th",
                       "yellow_sfo", "yellow_millbrae",
-                      "blue_dalycity", "red_dalycity" ];
+                      "blue_dalycity", "red_dalycity", "yellow_north_concord" ];
 
     var line_rows = {}      // line_row[0] = "red_richmond", etc
     for (var i=0; i < line_list.length; i++) { line_rows[line_list[i]] = i }
