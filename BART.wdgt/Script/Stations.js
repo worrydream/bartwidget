@@ -347,8 +347,9 @@ Stations.getNamerForLine = function (line_name) {
     }
     if (line_name == "yellow_pittsburg") {
         return function (doesTrainGoToStation) {
-            return doesTrainGoToStation("Pittsburg")  ? "yellow_pittsburg"
-                 :                                      "yellow_concord"
+            return doesTrainGoToStation("Pittsburg")     ? "yellow_pittsburg"
+                 : doesTrainGoToStation("North Concord") ? "yellow_north_concord"
+                 :                                         "yellow_concord"
         }
     }
     if (line_name == "yellow_millbrae") {

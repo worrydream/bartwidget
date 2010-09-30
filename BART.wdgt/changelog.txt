@@ -10,7 +10,8 @@ change between releases, but you don't really care about them.
 
 v1.06: <<RELEASE DATE HERE>>
 ----------------------------
- - Updated maps to reflect transfers at 19th St/Oakland
+ - Updated maps to reflect transfers at 19th St/Oakland.
+ - Updated graphics for trains which terminate at North Concord.
 
 v1.05:  September 13, 2010
 --------------------------
