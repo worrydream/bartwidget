@@ -8,6 +8,10 @@
 This document lists major changes.  All sorts of minor details
 change between releases, but you don't really care about them.
 
+v1.06: <<RELEASE DATE HERE>>
+----------------------------
+ - Updated maps to reflect transfers at 19th St/Oakland
+
 v1.05:  September 13, 2010
 --------------------------
  - Schedules and holidays updated.
