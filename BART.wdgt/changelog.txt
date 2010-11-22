@@ -10,11 +10,13 @@ change between releases, but you don't really care about them.
 
 v1.06: <<RELEASE DATE HERE>>
 ----------------------------
- - Updated maps to reflect transfers at 19th St/Oakland.
- - Updated graphics for trains which terminate at North Concord.
- - Remove routes between SF and South Oakland which required a transfer at
-   12th St (i.e., between the Red and Orange trains) which are not listed
+ - Holidays updated.
+ - Maps updated to reflect transfers at 19th St/Oakland.
+ - Graphics added for trains which terminate at North Concord.
+ - Routing logic changed to prevent showing routes between SF and South
+   Oakland which required a transfer at 12th St since these are not listed
    on BART's website.
+
 
 v1.05:  September 13, 2010
 --------------------------
