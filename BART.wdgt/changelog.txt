@@ -8,15 +8,15 @@
 This document lists major changes.  All sorts of minor details
 change between releases, but you don't really care about them.
 
-v1.06: <<RELEASE DATE HERE>>
-----------------------------
+v1.06:  February 19, 2011
+-------------------------
  - Holidays updated.
  - Maps updated to reflect transfers at 19th St/Oakland.
  - Graphics added for trains which terminate at North Concord.
  - Routing logic changed to prevent showing routes between SF and South
    Oakland which required a transfer at 12th St since these are not listed
    on BART's website.
-
+ - Added the West Dublin/Pleasanton Station.
 
 v1.05:  September 13, 2010
 --------------------------

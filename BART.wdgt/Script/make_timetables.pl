@@ -37,9 +37,9 @@ my %line_names = (
 );
 
 my %day_names = (
-    weekday  => '9/17/2010',
-    saturday => '9/18/2010',
-    sunday   => '9/19/2010',
+    weekday  => '02/21/2011',
+    saturday => '02/19/2011',
+    sunday   => '02/20/2011',
 );
 
 my %station_names = (
@@ -93,6 +93,7 @@ my %station_names = (
     
     GLEN => "Glen Park",
     CAST => "Castro Valley",
+    WDUB => "West Dublin",
     DUBL => "Dublin",
 );
 
