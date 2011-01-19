@@ -226,6 +226,7 @@ function SpeakingView (small_speech_bubble_view, announce_button) {
         return {
             "Del Norte":        "El Cerrito Del Norte",
             "Plaza":            "El Cerrito Plaza",
+            "Pleasant Hill":    "Pleasant Hill Contra Costa Center",
             "Pittsburg":        "Pittsburg Bay Point",
             "19th St":          "Nineteenth Street Oakland",
             "12th St":          "Twelfth Street Oakland City Center",
@@ -235,6 +236,7 @@ function SpeakingView (small_speech_bubble_view, announce_button) {
             "SFO":              "San Francisco Airport",
             "Coliseum":         "Coliseum Oakland Airport",
             "San Leandro":      "San Lee Andro",
+            "West Dublin":      "West Dublin Pleasanton",
             "Dublin":           "Dublin Pleasanton"
         }
     }

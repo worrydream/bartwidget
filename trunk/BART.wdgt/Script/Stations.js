@@ -129,7 +129,7 @@ function Stations () {
     })
     
     makeZone("Dublin", {
-        station_names: [ "Bay Fair", "Castro Valley", "Dublin" ],
+        station_names: [ "Bay Fair", "Castro Valley", "West Dublin", "Dublin" ],
         routeTo: function (dest) { 
             var north_lines = [ "blue_dalycity" ]
             var south_lines = [ "blue_dublin" ]

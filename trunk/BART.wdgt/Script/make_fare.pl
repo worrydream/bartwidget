@@ -19,6 +19,7 @@ use XML::Simple;
 
 #-----------------------------------------------------------------
 #  Tables
+my $date = '02/19/2011';
 
 my %station_names = (
 
@@ -71,6 +72,7 @@ my %station_names = (
     
     GLEN => "Glen Park",
     CAST => "Castro Valley",
+    WDUB => "West Dublin",
     DUBL => "Dublin",
 );
 
@@ -101,7 +103,7 @@ exit();
 sub makeUrl {
     my ($from_station, $to_station) = @_;
     return "http://api.bart.gov/api/sched.aspx?cmd=fare&orig=$from_station" .
-           "&dest=$to_station&date=today&key=MW9S-E7SL-26DU-VV8V";
+           "&dest=$to_station&date=$date&key=MW9S-E7SL-26DU-VV8V";
 }
 
 sub getFareFromXml {
