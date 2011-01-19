@@ -37,7 +37,7 @@ my %line_names = (
 );
 
 my %day_names = (
-    weekday  => '02/21/2011',
+    weekday  => '02/22/2011',
     saturday => '02/19/2011',
     sunday   => '02/20/2011',
 );
