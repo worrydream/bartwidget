@@ -5,8 +5,6 @@
 
 ...........................................................................
                                                                  Change Log
-This document lists major changes.  All sorts of minor details
-change between releases, but you don't really care about them.
 
 v1.06:  February 19, 2011
 -------------------------
