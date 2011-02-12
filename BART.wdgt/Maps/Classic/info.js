@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+117//------------------------------------------------------------------------------
 //  Classic/info.js is part of the BART dashboard widget.  (c) 2005 Bret Victor
 //  This software is licensed under the terms of the open source MIT license.
 //------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ map.addStation("Coliseum",382,369)
 map.addStation("San Leandro",417,416)
 map.addStation("Bay Fair",446,446)
 map.addStation("Castro Valley",490,456)
-map.addStation("West Dublin",610,446)
+map.addStation("West Dublin",614,448)
 map.addStation("Dublin",665,445)
 map.addStation("Hayward",482,484)
 map.addStation("South Hayward",509,526)
