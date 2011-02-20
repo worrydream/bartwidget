@@ -13,9 +13,9 @@
 	<key>CFBundleName</key>
 	<string>BART</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.06</string>
+	<string>1.07</string>
 	<key>CFBundleVersion</key>
-	<string>1.06</string>
+	<string>1.07</string>
 	<key>CloseBoxInsetX</key>
 	<integer>8</integer>
 	<key>CloseBoxInsetY</key>
