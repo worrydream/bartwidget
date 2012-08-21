@@ -5,9 +5,10 @@
 
 ...........................................................................
                                                                  Change Log
-v1.08:  XXXXXXXX XX, XXXX
--------------------------
- - 
+v1.08:  September 10, 2012
+--------------------------
+ - Fares updated (effective July 1, 2012).
+ - Schedules updated (effective Sept 10, 2012).
 
 v1.07:  January 3, 2012
 -------------------------
