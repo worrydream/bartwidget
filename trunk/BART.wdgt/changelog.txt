@@ -7,7 +7,7 @@
                                                                  Change Log
 v1.09:  XXXXXXXXX XX, XXXX
 --------------------------
- - 
+ - Holidays updated for 2013.
 
 v1.08:  September 10, 2012
 --------------------------
