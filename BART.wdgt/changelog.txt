@@ -5,9 +5,9 @@
 
 ...........................................................................
                                                                  Change Log
-v1.09:  XXXXXXXXX XX, XXXX
---------------------------
- - Holidays updated for 2013.
+v1.09:  February 4, 2017
+------------------------
+ - Schedules, fares, and holidays updated, at the request of my mom.
 
 v1.08:  September 10, 2012
 --------------------------
